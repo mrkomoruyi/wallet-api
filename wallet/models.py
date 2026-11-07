@@ -1,15 +1,24 @@
 import uuid
 from decimal import Decimal
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
+from django.core.validators import MinValueValidator
 
 
 class Wallet(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='wallet')
-    balance = models.DecimalField(max_digits=13, decimal_places=2, default=Decimal('0.00'))
+    balance = models.DecimalField(max_digits=13, decimal_places=2, default=Decimal('0.00'),
+                                  validators=[MinValueValidator(Decimal('0.00'))])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [models.CheckConstraint(
+            condition=Q(balance__gte=0),
+            name = 'wallet_balance_gte_0'
+        )]
 
 class Transaction(models.Model):
     class Status(models.TextChoices):
