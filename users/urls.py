@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from .views import UserViewSet
 
 router = DefaultRouter()
-router.register('users', UserViewSet)
+router.register('users', UserViewSet, basename='users')
 
 urlpatterns = [
     path('token/create', TokenObtainPairView.as_view()),
