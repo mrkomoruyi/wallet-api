@@ -9,7 +9,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -20,23 +19,88 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Wallet',
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('balance', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13)),
+                (
+                    'id',
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    'balance',
+                    models.DecimalField(
+                        decimal_places=2, default=Decimal('0.00'), max_digits=13
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, related_name='wallet', to=settings.AUTH_USER_MODEL)),
+                (
+                    'user',
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name='wallet',
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='Transaction',
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('processing', 'Processing'), ('success', 'Success'), ('failed', 'Failed'), ('reversed', 'Reversed')], default='pending')),
+                (
+                    'id',
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    'status',
+                    models.CharField(
+                        choices=[
+                            ('pending', 'Pending'),
+                            ('processing', 'Processing'),
+                            ('success', 'Success'),
+                            ('failed', 'Failed'),
+                            ('reversed', 'Reversed'),
+                        ],
+                        default='pending',
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('type', models.CharField(choices=[('transfer', 'Transfer'), ('deposit', 'Deposit'), ('withdrawal', 'Withdrawal')])),
+                (
+                    'type',
+                    models.CharField(
+                        choices=[
+                            ('transfer', 'Transfer'),
+                            ('deposit', 'Deposit'),
+                            ('withdrawal', 'Withdrawal'),
+                        ]
+                    ),
+                ),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=13)),
-                ('receiver', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='credits', to='wallet.wallet')),
-                ('sender', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='debits', to='wallet.wallet')),
+                (
+                    'receiver',
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name='credits',
+                        to='wallet.wallet',
+                    ),
+                ),
+                (
+                    'sender',
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name='debits',
+                        to='wallet.wallet',
+                    ),
+                ),
             ],
         ),
     ]

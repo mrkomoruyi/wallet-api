@@ -8,7 +8,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('wallet', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -18,10 +17,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='wallet',
             name='balance',
-            field=models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))]),
+            field=models.DecimalField(
+                decimal_places=2,
+                default=Decimal('0.00'),
+                max_digits=13,
+                validators=[django.core.validators.MinValueValidator(Decimal('0.00'))],
+            ),
         ),
         migrations.AddConstraint(
             model_name='wallet',
-            constraint=models.CheckConstraint(condition=models.Q(('balance__gte', 0)), name='wallet_balance_gte_0'),
+            constraint=models.CheckConstraint(
+                condition=models.Q(('balance__gte', 0)), name='wallet_balance_gte_0'
+            ),
         ),
     ]

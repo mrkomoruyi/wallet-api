@@ -8,6 +8,8 @@ from rest_framework.test import APIClient
 def test_anonymous_user_can_create_user():
     client = APIClient()
     url = reverse('users-list')
-    response = client.post(url, {'username': 'a', 'email': 'a@domain.com', 'password': 'testpass123'})
+    response = client.post(
+        url, {'username': 'a', 'email': 'a@domain.com', 'password': 'testpass123'}
+    )
 
     assert response.status_code == status.HTTP_201_CREATED
