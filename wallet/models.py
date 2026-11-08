@@ -1,9 +1,10 @@
 import uuid
 from decimal import Decimal
-from django.db import models
-from django.db.models import Q
+
 from django.conf import settings
 from django.core.validators import MinValueValidator
+from django.db import models
+from django.db.models import Q
 
 
 class Wallet(models.Model):
@@ -15,7 +16,7 @@ class Wallet(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        constraints = [models.CheckConstraint(
+        constraints = [models.CheckConstraint(  # noqa: RUF012
             condition=Q(balance__gte=0),
             name = 'wallet_balance_gte_0'
         )]

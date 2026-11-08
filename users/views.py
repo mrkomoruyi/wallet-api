@@ -1,5 +1,6 @@
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated, AllowAny
+
 from .models import User
 from .serializers import UserSerializer
 

@@ -1,7 +1,7 @@
 from django.urls import reverse
-from rest_framework.test import APIClient
-from rest_framework import status
 from pytest import mark
+from rest_framework import status
+from rest_framework.test import APIClient
 
 
 @mark.django_db
