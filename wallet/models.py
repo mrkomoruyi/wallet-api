@@ -28,6 +28,9 @@ class Wallet(models.Model):
             )
         ]
 
+    def __str__(self) -> str:
+        return f"{self.user}'s wallet"
+
 
 class Transaction(models.Model):
     class Status(models.TextChoices):
@@ -52,4 +55,6 @@ class Transaction(models.Model):
     status = models.CharField(choices=Status, default=Status.PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
     type = models.CharField(choices=Type)
-    amount = models.DecimalField(max_digits=13, decimal_places=2)
+    amount = models.DecimalField(
+        max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))]
+    )
